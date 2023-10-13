@@ -61,3 +61,24 @@ version for 1.7
 (define (sqrt-imp x)
   (sqrt-iter-imp 1.0 x)) 
 
+#|
+version for 1.8
+|#
+
+#| (define (improve3 y x) |#
+#|   (/ (+ (/ x (square y)) (* 2 y)) 3)) |#
+
+(define (improve3 y x)
+  (/ (+ (/ x (square y)) (* 1 y)) 2))
+
+(define (good-enough-imp3? guess x)
+  (let ([new-guess (improve3 guess x)])
+    (< (abs (- 1 (/ new-guess guess))) 0.001)))
+
+(define (cbrt-iter-imp guess x)
+  (if (good-enough-imp3? guess x)
+    guess
+    (cbrt-iter-imp (improve3 guess x) x))) 
+
+(define (cbrt x)
+  (cbrt-iter-imp 1.0 x)) 
