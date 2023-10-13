@@ -42,7 +42,22 @@ flexible version - for trying out different thresholds
   (< (abs (- (square guess) x)) threshold)) 
 
 (define (sqrt-flex x threshold)
-  (let ([guess 1.0]) (sqrt-iter-flex guess x threshold))
-  ) 
+  (let ([guess 1.0]) (sqrt-iter-flex guess x threshold)))
+   
 
+#|
+version for 1.7
+|#
+(define (good-enough-imp? guess x)
+  (let ([new-guess (improve guess x)])
+    (< (abs (- 1 (/ new-guess guess))) 0.001)))
+
+
+(define (sqrt-iter-imp guess x)
+  (if (good-enough-imp? guess x)
+    guess
+    (sqrt-iter-imp (improve guess x) x))) 
+
+(define (sqrt-imp x)
+  (sqrt-iter-imp 1.0 x)) 
 
